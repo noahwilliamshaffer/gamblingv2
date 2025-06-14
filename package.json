@@ -31,11 +31,17 @@
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.0.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "bitcoinjs-lib": "^6.1.5",
+    "ethers": "^6.8.1",
+    "bip32": "^4.0.0",
+    "bip39": "^3.1.0",
+    "crypto-js": "^4.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/qrcode": "^1.5.5",
+    "@types/crypto-js": "^4.2.1",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",

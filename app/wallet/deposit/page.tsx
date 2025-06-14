@@ -132,56 +132,45 @@ export default function DepositPage() {
           />
         </motion.div>
 
-        {/* Simulate Deposit */}
+        {/* Transaction Monitor */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Card className="card-glow">
+          <Card className="card-glow border-green-600/30">
             <CardHeader>
-              <CardTitle className="flex items-center">
+              <CardTitle className="flex items-center text-green-400">
                 <Plus className="w-5 h-5 mr-2" />
-                Simulate Deposit (Demo)
+                Live Transaction Monitoring
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="currency">Currency</Label>
-                  <select
-                    id="currency"
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value as 'BTC' | 'ETH')}
-                    className="w-full mt-1 px-3 py-2 bg-stake-gray border border-stake-accent rounded-md text-white"
-                  >
-                    <option value="BTC">Bitcoin (BTC)</option>
-                    <option value="ETH">Ethereum (ETH)</option>
-                  </select>
+              <div className="bg-green-900/20 border border-green-600/30 rounded-lg p-4">
+                <h4 className="font-semibold text-green-200 mb-2">Automatic Detection</h4>
+                <p className="text-green-300/80 text-sm">
+                  Your deposit addresses are being monitored 24/7. Any incoming transactions 
+                  will be automatically detected and credited to your account after network confirmation.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div className="space-y-2">
+                  <h5 className="font-medium text-white">Bitcoin Network</h5>
+                  <ul className="text-gray-400 space-y-1">
+                    <li>• Minimum: 0.0001 BTC</li>
+                    <li>• Confirmations: 3 blocks</li>
+                    <li>• Processing: ~30 minutes</li>
+                  </ul>
                 </div>
-                <div>
-                  <Label htmlFor="amount">Amount</Label>
-                  <Input
-                    id="amount"
-                    type="number"
-                    step="0.00000001"
-                    placeholder="0.00000000"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    className="mt-1"
-                  />
+                <div className="space-y-2">
+                  <h5 className="font-medium text-white">Ethereum Network</h5>
+                  <ul className="text-gray-400 space-y-1">
+                    <li>• Minimum: 0.001 ETH</li>
+                    <li>• Confirmations: 12 blocks</li>
+                    <li>• Processing: ~3 minutes</li>
+                  </ul>
                 </div>
               </div>
-              <Button
-                onClick={simulateDeposit}
-                disabled={!amount}
-                className="w-full"
-              >
-                Simulate Deposit
-              </Button>
-              <p className="text-xs text-gray-400">
-                This is a demo feature that simulates a deposit transaction.
-              </p>
             </CardContent>
           </Card>
         </motion.div>

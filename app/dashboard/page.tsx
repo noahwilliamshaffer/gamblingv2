@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabaseClient'
-import { generateBTCAddress, generateETHAddress } from '@/lib/addressUtils'
+import { generateBTCAddress, generateETHAddress, getAddressBalance, getCryptoPrices } from '@/lib/addressUtils'
 import WalletCard from '@/components/WalletCard'
 import DepositHistoryTable from '@/components/DepositHistoryTable'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -16,6 +16,9 @@ export default function DashboardPage() {
   const [user, setUser] = useState<any>(null)
   const [userProfile, setUserProfile] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [balances, setBalances] = useState({ btc: 0, eth: 0 })
+  const [prices, setPrices] = useState({ btc: 0, eth: 0 })
+  const [totalValue, setTotalValue] = useState(0)
   const router = useRouter()
 
   useEffect(() => {
@@ -61,15 +64,34 @@ export default function DashboardPage() {
           console.error('Error creating user profile:', createError)
         } else {
           setUserProfile(newProfile)
+          await loadBalances(newProfile)
         }
       } else if (!profileError) {
         setUserProfile(profile)
+        await loadBalances(profile)
       }
     } catch (error) {
       console.error('Error checking user:', error)
       router.push('/login')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const loadBalances = async (profile: any) => {
+    try {
+      // Fetch real balances and prices
+      const [btcBalance, ethBalance, cryptoPrices] = await Promise.all([
+        getAddressBalance(profile.btc_address, 'BTC'),
+        getAddressBalance(profile.eth_address, 'ETH'),
+        getCryptoPrices()
+      ])
+
+      setBalances({ btc: btcBalance, eth: ethBalance })
+      setPrices(cryptoPrices)
+      setTotalValue((btcBalance * cryptoPrices.btc) + (ethBalance * cryptoPrices.eth))
+    } catch (error) {
+      console.error('Error loading balances:', error)
     }
   }
 
@@ -131,9 +153,9 @@ export default function DashboardPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">$0.00</div>
+              <div className="text-2xl font-bold text-white">${totalValue.toFixed(2)}</div>
               <p className="text-xs text-gray-400 mt-1">
-                Equivalent USD value
+                Total portfolio value
               </p>
             </CardContent>
           </Card>
@@ -180,13 +202,13 @@ export default function DashboardPage() {
             <WalletCard
               currency="BTC"
               address={userProfile.btc_address}
-              balance={0}
+              balance={balances.btc}
               onCopy={handleCopyAddress}
             />
             <WalletCard
               currency="ETH"
               address={userProfile.eth_address}
-              balance={0}
+              balance={balances.eth}
               onCopy={handleCopyAddress}
             />
           </div>

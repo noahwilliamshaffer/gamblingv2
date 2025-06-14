@@ -118,20 +118,20 @@ export default function WithdrawPage() {
           </div>
         </motion.div>
 
-        {/* Balance Warning */}
+        {/* Security Notice */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <Card className="border-yellow-600/30 bg-yellow-900/10">
+          <Card className="border-orange-600/30 bg-orange-900/10">
             <CardContent className="pt-6">
               <div className="flex items-center space-x-3">
-                <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                <AlertTriangle className="w-5 h-5 text-orange-400" />
                 <div>
-                  <h4 className="font-semibold text-yellow-200">Demo Mode</h4>
-                  <p className="text-yellow-300/80 text-sm">
-                    This is a withdrawal simulation. No actual funds will be transferred.
+                  <h4 className="font-semibold text-orange-200">Security Verification Required</h4>
+                  <p className="text-orange-300/80 text-sm">
+                    All withdrawals require manual review and 2FA verification before processing.
                   </p>
                 </div>
               </div>
