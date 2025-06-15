@@ -435,5 +435,4 @@ export default function Dashboard() {
       </div>
     </StakeMainLayout>
   )
-} 
-} 
+}
