@@ -24,7 +24,7 @@ import {
   LogOut,
   User
 } from 'lucide-react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { supabase } from '../lib/supabaseClient'
 
 interface StakeLayoutProps {
   children: React.ReactNode
@@ -36,7 +36,6 @@ export default function StakeLayout({ children }: StakeLayoutProps) {
   const [balance, setBalance] = useState({ gc: 250000, sc: 25 })
   const pathname = usePathname()
   const router = useRouter()
-  const supabase = createClientComponentClient()
 
   useEffect(() => {
     const getUser = async () => {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { supabase } from '../../lib/supabaseClient'
 import { motion } from 'framer-motion'
 import { Mail, Smartphone, ArrowRight, Star, Shield, Gift, Users } from 'lucide-react'
 
@@ -10,7 +10,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const router = useRouter()
-  const supabase = createClientComponentClient()
 
   useEffect(() => {
     const checkUser = async () => {

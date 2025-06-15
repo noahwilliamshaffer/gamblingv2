@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { supabase } from '../../lib/supabaseClient'
 import StakeLayout from '../../components/StakeLayout'
 import { 
   Play, 
@@ -36,7 +36,6 @@ export default function Dashboard() {
   ])
 
   const router = useRouter()
-  const supabase = createClientComponentClient()
 
   useEffect(() => {
     checkUser()
