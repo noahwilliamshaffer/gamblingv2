@@ -1,10 +1,15 @@
 import { supabase } from './supabaseClient'
 
 export const signInWithGoogle = async () => {
+  // Force the correct redirect URL for production
+  const redirectUrl = typeof window !== 'undefined' 
+    ? `${window.location.origin}/dashboard`
+    : 'https://gamblingstakev2-4pmqpjndy-noahwilliamshaffers-projects.vercel.app/dashboard'
+    
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${window.location.origin}/dashboard`
+      redirectTo: redirectUrl
     }
   })
   

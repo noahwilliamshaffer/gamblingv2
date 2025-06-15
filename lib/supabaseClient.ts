@@ -5,9 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://mvpvxsozylnboebsoxzn.supabase.co'
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im12cHZ4c296eWxuYm9lYnNveHpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4NDU4OTIsImV4cCI6MjA2NTQyMTg5Mn0.aMwXki9THR8hicMjUNv4HPdxQjbUcT64Tzx0mhEbN5w'
 
-export const supabase = typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SUPABASE_URL 
-  ? createClientComponentClient()
-  : createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // For server-side operations
 export const supabaseAdmin = createClient(
