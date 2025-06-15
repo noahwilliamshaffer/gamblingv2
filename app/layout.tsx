@@ -1,13 +1,12 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Navbar from '@/components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Stake - Social Casino & Sweepstakes',
-  description: 'Play casino-style games, win real prizes. Join the ultimate social gaming experience.',
+  title: 'Stake - #1 Crypto Casino',
+  description: 'The world\'s biggest crypto casino and sportsbook. Play thousands of games with crypto and traditional currencies.',
 }
 
 export default function RootLayout({
@@ -17,11 +16,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} stake-app`}>
-        <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
+      <body className={`${inter.className} bg-[#0f1419] text-white`}>
+        {children}
       </body>
     </html>
   )
