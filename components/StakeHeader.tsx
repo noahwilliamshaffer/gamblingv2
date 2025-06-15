@@ -64,20 +64,20 @@ export default function StakeHeader({ onMenuToggle, isMobileMenuOpen }: StakeHea
           </Link>
 
           {/* Navigation - Desktop */}
-          <nav className="hidden lg:flex items-center gap-6">
-            <Link href="/dashboard" className="text-gray-300 hover:text-white transition-colors font-medium">
+          <nav className="flex items-center gap-6 text-white">
+            <Link href="/dashboard" className="hover:text-[#00d4ff] transition-colors font-medium px-2 py-1">
               Dashboard
             </Link>
-            <Link href="/casino" className="text-gray-300 hover:text-white transition-colors font-medium">
-              Casino
+            <Link href="/casino" className="hover:text-[#00d4ff] transition-colors font-medium px-2 py-1 text-[#00d4ff] border border-[#00d4ff] rounded">
+              🎰 Casino
             </Link>
-            <Link href="/sports" className="text-gray-300 hover:text-white transition-colors font-medium">
+            <Link href="/sports" className="hover:text-[#00d4ff] transition-colors font-medium px-2 py-1">
               Sports
             </Link>
-            <Link href="/originals" className="text-gray-300 hover:text-white transition-colors font-medium">
+            <Link href="/originals" className="hover:text-[#00d4ff] transition-colors font-medium px-2 py-1">
               Originals
             </Link>
-            <Link href="/promotions" className="text-gray-300 hover:text-white transition-colors font-medium">
+            <Link href="/promotions" className="hover:text-[#00d4ff] transition-colors font-medium px-2 py-1">
               Promotions
             </Link>
           </nav>

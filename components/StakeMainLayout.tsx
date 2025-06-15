@@ -26,11 +26,18 @@ export default function StakeMainLayout({ children }: StakeMainLayoutProps) {
       
       {/* Main Content Area */}
       <div className="flex">
-        {/* Sidebar */}
-        <StakeSidebar isOpen={sidebarOpen} onClose={closeSidebar} />
+        {/* Sidebar - Always visible on desktop */}
+        <div className="hidden md:block w-64 flex-shrink-0">
+          <StakeSidebar isOpen={true} onClose={() => {}} />
+        </div>
+        
+        {/* Mobile Sidebar */}
+        <div className="md:hidden">
+          <StakeSidebar isOpen={sidebarOpen} onClose={closeSidebar} />
+        </div>
         
         {/* Main Content */}
-        <main className="flex-1 md:ml-64 min-h-[calc(100vh-4rem)]">
+        <main className="flex-1 min-h-[calc(100vh-4rem)]">
           <div className="p-6">
             {children}
           </div>

@@ -190,6 +190,37 @@ export default function Dashboard() {
   return (
     <StakeMainLayout>
       <div className="space-y-8">
+        {/* Quick Navigation Bar */}
+        <div className="bg-[#1a2332] rounded-xl p-4 mb-6">
+          <div className="flex flex-wrap gap-4 items-center">
+            <h2 className="text-lg font-semibold text-white">Quick Access:</h2>
+            <Link 
+              href="/dashboard" 
+              className="px-4 py-2 bg-[#00d4ff] text-white rounded-lg hover:bg-[#00b8e6] transition-colors font-medium"
+            >
+              🏠 Dashboard
+            </Link>
+            <Link 
+              href="/casino" 
+              className="px-4 py-2 bg-gradient-to-r from-[#00d4ff] to-[#7c3aed] text-white rounded-lg hover:from-[#00b8e6] hover:to-[#6b21d4] transition-colors font-medium"
+            >
+              🎰 Casino Games
+            </Link>
+            <Link 
+              href="/originals" 
+              className="px-4 py-2 bg-[#2d3748] text-white rounded-lg hover:bg-[#4a5568] transition-colors font-medium"
+            >
+              ⭐ Stake Originals
+            </Link>
+            <Link 
+              href="/settings" 
+              className="px-4 py-2 bg-[#2d3748] text-white rounded-lg hover:bg-[#4a5568] transition-colors font-medium"
+            >
+              ⚙️ Settings
+            </Link>
+          </div>
+        </div>
+
         {/* Navigation Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
