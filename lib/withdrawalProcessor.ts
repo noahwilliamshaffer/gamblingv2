@@ -1,7 +1,11 @@
 import { supabase } from './supabaseClient'
 import { validateBTCAddress, validateETHAddress } from './addressUtils'
 import * as bitcoin from 'bitcoinjs-lib'
+import { ECPairFactory } from 'ecpair'
+import * as ecc from 'tiny-secp256k1'
 import { ethers } from 'ethers'
+
+const ECPair = ECPairFactory(ecc)
 
 export interface WithdrawalRequest {
   id: string
@@ -187,7 +191,7 @@ export async function processBTCWithdrawal(
 
     // Create Bitcoin transaction
     const network = bitcoin.networks.bitcoin // Use testnet for testing
-    const keyPair = bitcoin.ECPair.fromWIF(privateKey, network)
+    const keyPair = ECPair.fromWIF(privateKey, network)
     const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network })
 
     // Build transaction (simplified - in production, use proper UTXO management)
