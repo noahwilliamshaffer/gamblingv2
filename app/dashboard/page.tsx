@@ -180,6 +180,40 @@ export default function Dashboard() {
   if (loading) {
     return (
       <StakeMainLayout>
+        {/* DEBUG: Simple Test Navigation - Should be VERY visible */}
+        <div style={{
+          backgroundColor: '#ff0000',
+          color: '#ffffff',
+          padding: '20px',
+          textAlign: 'center',
+          fontSize: '24px',
+          fontWeight: 'bold',
+          marginBottom: '20px'
+        }}>
+          🚨 DEBUG: If you see this, the page is loading! 🚨
+          <br />
+          <a href="/casino" style={{
+            backgroundColor: '#00ff00',
+            color: '#000000',
+            padding: '10px 20px',
+            textDecoration: 'none',
+            borderRadius: '5px',
+            margin: '10px'
+          }}>
+            🎰 CLICK HERE FOR CASINO 🎰
+          </a>
+          <a href="/originals" style={{
+            backgroundColor: '#0000ff',
+            color: '#ffffff',
+            padding: '10px 20px',
+            textDecoration: 'none',
+            borderRadius: '5px',
+            margin: '10px'
+          }}>
+            ⭐ ORIGINALS ⭐
+          </a>
+        </div>
+
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="w-16 h-16 border-4 border-[#00d4ff] border-t-transparent rounded-full animate-spin"></div>
         </div>
@@ -189,6 +223,40 @@ export default function Dashboard() {
 
   return (
     <StakeMainLayout>
+      {/* DEBUG: Simple Test Navigation - Should be VERY visible */}
+      <div style={{
+        backgroundColor: '#ff0000',
+        color: '#ffffff',
+        padding: '20px',
+        textAlign: 'center',
+        fontSize: '24px',
+        fontWeight: 'bold',
+        marginBottom: '20px'
+      }}>
+        🚨 DEBUG: If you see this, the page is loading! 🚨
+        <br />
+        <a href="/casino" style={{
+          backgroundColor: '#00ff00',
+          color: '#000000',
+          padding: '10px 20px',
+          textDecoration: 'none',
+          borderRadius: '5px',
+          margin: '10px'
+        }}>
+          🎰 CLICK HERE FOR CASINO 🎰
+        </a>
+        <a href="/originals" style={{
+          backgroundColor: '#0000ff',
+          color: '#ffffff',
+          padding: '10px 20px',
+          textDecoration: 'none',
+          borderRadius: '5px',
+          margin: '10px'
+        }}>
+          ⭐ ORIGINALS ⭐
+        </a>
+      </div>
+
       <div className="space-y-8">
         {/* Quick Navigation Bar */}
         <div className="bg-[#1a2332] rounded-xl p-4 mb-6">
