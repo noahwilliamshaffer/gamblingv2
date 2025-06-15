@@ -65,6 +65,9 @@ export default function StakeHeader({ onMenuToggle, isMobileMenuOpen }: StakeHea
 
           {/* Navigation - Desktop */}
           <nav className="hidden lg:flex items-center gap-6">
+            <Link href="/dashboard" className="text-gray-300 hover:text-white transition-colors font-medium">
+              Dashboard
+            </Link>
             <Link href="/casino" className="text-gray-300 hover:text-white transition-colors font-medium">
               Casino
             </Link>
@@ -185,6 +188,49 @@ export default function StakeHeader({ onMenuToggle, isMobileMenuOpen }: StakeHea
           )}
         </div>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-[#1a2332] border-t border-[#2d3748]">
+          <nav className="px-4 py-4 space-y-2">
+            <Link
+              href="/dashboard"
+              onClick={onMenuToggle}
+              className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-[#0f1419] rounded-lg transition-colors font-medium"
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/casino"
+              onClick={onMenuToggle}
+              className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-[#0f1419] rounded-lg transition-colors font-medium"
+            >
+              Casino
+            </Link>
+            <Link
+              href="/sports"
+              onClick={onMenuToggle}
+              className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-[#0f1419] rounded-lg transition-colors font-medium"
+            >
+              Sports
+            </Link>
+            <Link
+              href="/originals"
+              onClick={onMenuToggle}
+              className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-[#0f1419] rounded-lg transition-colors font-medium"
+            >
+              Originals
+            </Link>
+            <Link
+              href="/promotions"
+              onClick={onMenuToggle}
+              className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-[#0f1419] rounded-lg transition-colors font-medium"
+            >
+              Promotions
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   )
 } 
