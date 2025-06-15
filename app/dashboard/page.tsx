@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { supabase } from '../../lib/supabaseClient'
 import StakeMainLayout from '../../components/StakeMainLayout'
 import { 
@@ -18,7 +19,9 @@ import {
   Target,
   Crown,
   Sparkles,
-  Filter
+  Filter,
+  Home,
+  Gamepad2
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 
@@ -187,10 +190,63 @@ export default function Dashboard() {
   return (
     <StakeMainLayout>
       <div className="space-y-8">
+        {/* Navigation Tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-[#1a2332] rounded-xl p-2"
+        >
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/dashboard"
+              className="bg-[#00d4ff] text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2"
+            >
+              <Home size={16} />
+              Dashboard
+            </Link>
+            <Link
+              href="/casino"
+              className="bg-[#0f1419] hover:bg-[#2d3748] text-gray-300 hover:text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 border border-[#2d3748]"
+            >
+              <Gamepad2 size={16} />
+              Casino
+            </Link>
+            <Link
+              href="/wallet"
+              className="bg-[#0f1419] hover:bg-[#2d3748] text-gray-300 hover:text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 border border-[#2d3748]"
+            >
+              <Coins size={16} />
+              Wallet
+            </Link>
+            <Link
+              href="/originals"
+              className="bg-[#0f1419] hover:bg-[#2d3748] text-gray-300 hover:text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 border border-[#2d3748]"
+            >
+              <Dice1 size={16} />
+              Originals
+            </Link>
+            <Link
+              href="/sports"
+              className="bg-[#0f1419] hover:bg-[#2d3748] text-gray-300 hover:text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 border border-[#2d3748]"
+            >
+              <Target size={16} />
+              Sports
+            </Link>
+            <Link
+              href="/promotions"
+              className="bg-[#0f1419] hover:bg-[#2d3748] text-gray-300 hover:text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 border border-[#2d3748]"
+            >
+              <Gift size={16} />
+              Promotions
+            </Link>
+          </div>
+        </motion.div>
+
         {/* Welcome Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
           className="bg-gradient-to-r from-[#00d4ff]/10 to-[#7c3aed]/10 border border-[#1a2332] rounded-xl p-6"
         >
           <div className="flex items-center justify-between">
@@ -220,7 +276,7 @@ export default function Dashboard() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.2 }}
             className="bg-gradient-to-r from-[#00d4ff] to-[#7c3aed] rounded-xl p-4 cursor-pointer hover:scale-105 transition-transform"
           >
             <div className="flex items-center gap-3">
@@ -379,4 +435,5 @@ export default function Dashboard() {
       </div>
     </StakeMainLayout>
   )
+} 
 } 
