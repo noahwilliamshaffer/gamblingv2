@@ -1,11 +1,17 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { createClient } from '@supabase/supabase-js'
 
-export const supabase = createClientComponentClient()
+// Handle missing environment variables during build
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_anon_key'
+
+export const supabase = typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SUPABASE_URL 
+  ? createClientComponentClient()
+  : createClient(supabaseUrl, supabaseAnonKey)
 
 // For server-side operations
 export const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+  supabaseUrl,
   process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder_service_role_key'
 )
 
