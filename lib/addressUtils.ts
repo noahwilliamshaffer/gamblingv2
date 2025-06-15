@@ -1,4 +1,5 @@
 import { createHash, randomBytes } from 'crypto'
+import { keccak256 } from 'ethers'
 
 // Bitcoin address generation (simplified - in production use proper libraries like bitcoinjs-lib)
 export function generateBTCAddress(userId: string): string {
@@ -21,10 +22,10 @@ export function generateETHAddress(userId: string): string {
   // Generate a proper Ethereum address
   // In production, use ethers.js or web3.js for proper key generation
   const seed = createHash('sha256').update(userId + randomBytes(32)).digest()
-  const publicKey = createHash('keccak256').update(seed).digest()
+  const publicKey = keccak256(seed.toString('hex'))
   
   // Take last 20 bytes and add 0x prefix
-  const address = '0x' + publicKey.slice(-20).toString('hex')
+  const address = '0x' + publicKey.slice(-40) // keccak256 returns hex string, so slice -40 for 20 bytes
   return address
 }
 

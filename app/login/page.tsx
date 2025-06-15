@@ -2,26 +2,17 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { signInWithGoogle, signInWithPhone, verifyOtp } from '@/lib/auth'
-import { supabase } from '@/lib/supabaseClient'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { motion } from 'framer-motion'
-import { Phone, Mail, Shield, AlertTriangle } from 'lucide-react'
+import { Mail, Smartphone, ArrowRight, Star, Shield, Gift, Users } from 'lucide-react'
 
-export default function LoginPage() {
-  const [phone, setPhone] = useState('')
-  const [otp, setOtp] = useState('')
-  const [otpSent, setOtpSent] = useState(false)
+export default function Login() {
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
   const router = useRouter()
+  const supabase = createClientComponentClient()
 
   useEffect(() => {
-    // Check if user is already logged in
     const checkUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
@@ -29,213 +20,186 @@ export default function LoginPage() {
       }
     }
     checkUser()
-  }, [router])
+  }, [])
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleLogin = async () => {
     setLoading(true)
-    setError('')
+    setMessage('')
     
     try {
-      const { error } = await signInWithGoogle()
-      if (error) {
-        setError(error.message)
-      }
-    } catch (err) {
-      setError('An error occurred during sign in')
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`
+        }
+      })
+      
+      if (error) throw error
+    } catch (error: any) {
+      setMessage(error.message)
     } finally {
       setLoading(false)
     }
   }
 
-  const handlePhoneSignIn = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
-
-    try {
-      const { error } = await signInWithPhone(phone)
-      if (error) {
-        setError(error.message)
-      } else {
-        setOtpSent(true)
-      }
-    } catch (err) {
-      setError('An error occurred during sign in')
-    } finally {
-      setLoading(false)
+  const features = [
+    {
+      icon: Gift,
+      title: '250,000 Gold Coins',
+      description: 'Free welcome bonus'
+    },
+    {
+      icon: Star,
+      title: '25 Stake Cash',
+      description: 'Redeemable for real prizes'
+    },
+    {
+      icon: Shield,
+      title: 'Provably Fair',
+      description: 'Transparent gaming'
+    },
+    {
+      icon: Users,
+      title: '2M+ Players',
+      description: 'Join the community'
     }
-  }
-
-  const handleOtpVerification = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
-
-    try {
-      const { error } = await verifyOtp(phone, otp)
-      if (error) {
-        setError(error.message)
-      } else {
-        router.push('/dashboard')
-      }
-    } catch (err) {
-      setError('An error occurred during verification')
-    } finally {
-      setLoading(false)
-    }
-  }
+  ]
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-stake-darker via-stake-dark to-stake-gray p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
-      >
-        <Card className="shadow-2xl border-stake-accent">
-          <CardHeader className="text-center pb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-stake-primary to-stake-secondary rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-white font-bold text-2xl">S</span>
-            </div>
-            <CardTitle className="text-2xl font-bold neon-text">Welcome to StakeCrypto</CardTitle>
-            <CardDescription className="text-gray-400">
-              Sign in to access your crypto wallet
-            </CardDescription>
-          </CardHeader>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex">
+      {/* Left Side - Branding */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center p-12 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20"></div>
+        <div className="relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8"
+          >
+            <h1 className="text-6xl font-bold text-white mb-4">
+              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Stake
+              </span>
+            </h1>
+            <p className="text-xl text-gray-300 mb-8">
+              The ultimate social casino experience
+            </p>
+          </motion.div>
 
-          <CardContent>
-            <Tabs defaultValue="google" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-2 bg-stake-gray">
-                <TabsTrigger value="google" className="data-[state=active]:bg-stake-accent">
-                  <Mail className="w-4 h-4 mr-2" />
-                  Google
-                </TabsTrigger>
-                <TabsTrigger value="phone" className="data-[state=active]:bg-stake-accent">
-                  <Phone className="w-4 h-4 mr-2" />
-                  Phone
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="google" className="space-y-4">
-                <Button
-                  onClick={handleGoogleSignIn}
-                  disabled={loading}
-                  className="w-full"
-                  size="lg"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="grid grid-cols-2 gap-4 mb-8"
+          >
+            {features.map((feature, index) => {
+              const Icon = feature.icon
+              return (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                  className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20"
                 >
-                  {loading ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                  ) : (
-                    <Mail className="w-4 h-4 mr-2" />
-                  )}
-                  Continue with Google
-                </Button>
-              </TabsContent>
+                  <Icon className="text-blue-400 mb-2" size={24} />
+                  <h3 className="font-semibold text-white text-sm">{feature.title}</h3>
+                  <p className="text-gray-400 text-xs">{feature.description}</p>
+                </motion.div>
+              )
+            })}
+          </motion.div>
 
-              <TabsContent value="phone" className="space-y-4">
-                {!otpSent ? (
-                  <form onSubmit={handlePhoneSignIn} className="space-y-4">
-                    <div>
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="+1234567890"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        required
-                        className="mt-1"
-                      />
-                    </div>
-                    <Button
-                      type="submit"
-                      disabled={loading || !phone}
-                      className="w-full"
-                      size="lg"
-                    >
-                      {loading ? (
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                      ) : (
-                        <Phone className="w-4 h-4 mr-2" />
-                      )}
-                      Send SMS Code
-                    </Button>
-                  </form>
-                ) : (
-                  <form onSubmit={handleOtpVerification} className="space-y-4">
-                    <div>
-                      <Label htmlFor="otp">Verification Code</Label>
-                      <Input
-                        id="otp"
-                        type="text"
-                        placeholder="123456"
-                        value={otp}
-                        onChange={(e) => setOtp(e.target.value)}
-                        required
-                        className="mt-1"
-                        maxLength={6}
-                      />
-                      <p className="text-xs text-gray-400 mt-1">
-                        Code sent to {phone}
-                      </p>
-                    </div>
-                    <Button
-                      type="submit"
-                      disabled={loading || !otp}
-                      className="w-full"
-                      size="lg"
-                    >
-                      {loading ? (
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                      ) : (
-                        <Shield className="w-4 h-4 mr-2" />
-                      )}
-                      Verify Code
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      onClick={() => {
-                        setOtpSent(false)
-                        setOtp('')
-                      }}
-                      className="w-full text-xs"
-                    >
-                      Change phone number
-                    </Button>
-                  </form>
-                )}
-              </TabsContent>
-            </Tabs>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="text-gray-400 text-sm"
+          >
+            <p>★★★★★ Rated 4.8/5 by players</p>
+            <p className="mt-2">Join millions of players worldwide</p>
+          </motion.div>
+        </div>
+      </div>
 
-            {error && (
+      {/* Right Side - Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="w-full max-w-md"
+        >
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
+              <p className="text-gray-400">Sign in to continue your gaming journey</p>
+            </div>
+
+            {message && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-4 p-3 bg-red-900/20 border border-red-600/30 rounded-lg flex items-center space-x-2"
+                className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-sm"
               >
-                <AlertTriangle className="w-4 h-4 text-red-400" />
-                <p className="text-red-400 text-sm">{error}</p>
+                {message}
               </motion.div>
             )}
 
-            {/* Security Notice */}
-            <div className="mt-6 p-4 bg-stake-accent/20 rounded-lg border border-stake-accent/30">
-              <h4 className="text-sm font-semibold text-stake-primary mb-2 flex items-center">
-                <Shield className="w-4 h-4 mr-2" />
-                Security Notice
-              </h4>
-              <ul className="text-xs text-gray-400 space-y-1">
-                <li>• One verified account per user</li>
-                <li>• Enable 2FA after signup for enhanced security</li>
-                <li>• Abuse detection actively monitored</li>
-                <li>• Funds may be forfeited if violations detected</li>
-              </ul>
+            <div className="space-y-4">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleGoogleLogin}
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              >
+                {loading ? (
+                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <>
+                    <Mail size={20} />
+                    Continue with Google
+                    <ArrowRight size={16} />
+                  </>
+                )}
+              </motion.button>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-600"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-transparent text-gray-400">More options coming soon</span>
+                </div>
+              </div>
+
+              <button
+                disabled
+                className="w-full bg-gray-600/50 text-gray-400 font-semibold py-4 px-6 rounded-xl cursor-not-allowed flex items-center justify-center gap-3"
+              >
+                <Smartphone size={20} />
+                Phone Number (Coming Soon)
+              </button>
             </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+
+            <div className="mt-8 text-center">
+              <p className="text-gray-400 text-sm">
+                New to Stake?{' '}
+                <span className="text-blue-400 font-semibold">
+                  Get 250K Gold Coins + 25 SC free!
+                </span>
+              </p>
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-gray-600 text-center">
+              <p className="text-xs text-gray-500">
+                By signing in, you agree to our Terms of Service and Privacy Policy.
+                Must be 21+ to play.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </div>
   )
 } 

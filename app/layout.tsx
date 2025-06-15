@@ -6,8 +6,8 @@ import Navbar from '@/components/Navbar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'StakeCrypto - Crypto Deposit Platform',
-  description: 'Secure crypto deposit platform with Bitcoin and Ethereum support',
+  title: 'Stake - Social Casino & Sweepstakes',
+  description: 'Play casino-style games, win real prizes. Join the ultimate social gaming experience.',
 }
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={inter.className}>
+      <body className={`${inter.className} stake-app`}>
         <Navbar />
         <main className="min-h-screen">
           {children}
